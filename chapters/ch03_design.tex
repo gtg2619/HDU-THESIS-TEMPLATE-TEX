@@ -5,6 +5,8 @@
 
 \section{整体架构设计}
 
+本文模型整体沿用了 Transformer 的编码器-解码器结构\cite{vaswani2017attention}，但在注意力计算与位置编码两方面进行了针对性改进。
+
 \zhlipsum[1]
 
 \begin{figure}[ht]
@@ -25,7 +27,7 @@
   \text{SparseAttn}(Q, K, V) = \text{softmax}\!\left(\frac{QK^{T}}{\sqrt{d_k}} \odot M\right) V
   \label{eq:sparse_attn}
 \end{equation}
-其中$M_{ij} = 1$当且仅当$|i - j| \leq w$，复杂度降为$O(n \cdot w \cdot d)$。
+其中$M_{ij} = 1$当且仅当$|i - j| \leq w$，复杂度降为$O(n \cdot w \cdot d)$。该思路与原始 Transformer\cite{vaswani2017attention} 中提出的注意力模式一脉相承，但通过引入结构化稀疏显著提升了长序列处理效率。
 
 \section{混合编码策略}
 
@@ -37,7 +39,7 @@
   \text{PE}(pos, 2i+1) &= \cos\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)
 \end{align}
 
-输入嵌入为词嵌入与位置编码的和：
+与 BERT\cite{devlin2019bert} 仅使用单一位置编码不同，本文的输入嵌入为词嵌入、位置编码与段嵌入三者之和：
 \begin{equation}
   E_{\text{input}} = E_{\text{token}} + \text{PE}(pos) + E_{\text{segment}}
   \label{eq:input_emb}

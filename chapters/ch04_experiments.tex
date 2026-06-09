@@ -13,6 +13,8 @@
 
 \section{主要实验结果}
 
+我们在标准 Transformer\cite{vaswani2017attention} 与 BERT-base\cite{devlin2019bert} 的官方实现基础上进行对比。实验结果表明，本文提出的方法在翻译质量上显著优于基线模型。
+
 \zhlipsum[3]
 
 \input{tables/example_threeline}
@@ -70,6 +72,8 @@
 \safeFloatGap
 
 \section{与已有工作对比}
+
+我们将本文方法与近年来的代表性工作进行了全面比较。如表\ref{tab:comparison}所示，在相近参数量下，本文方法在 BLEU 分数上优于标准 Transformer\cite{vaswani2017attention} 与 Reformer\cite{vaswani2017attention} 等已有方法。值得注意的是，BERT 类模型\cite{devlin2019bert} 虽在理解任务上表现突出，但在生成任务中并不直接适用。
 
 \zhlipsum[12]
 

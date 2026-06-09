@@ -41,10 +41,13 @@ Transformer 作为一种完全基于注意力机制的序列转换模型，在�
 
 \zhlipsum[5]
 
+值得注意的是，标准 Transformer\cite{vaswani2017attention} 与 BERT\cite{devlin2019bert} 的底层均采用多头自注意力作为核心计算单元，其有效性已在多项研究中得到充分验证\cite{vaswani2017attention,devlin2019bert}。
+
 \section{预训练与微调范式}
 
 \zhlipsum[7]
-BERT 通过掩码语言模型与下一句预测任务进行预训练，在十一个自然语言处理任务上刷新了最优结果\cite{devlin2019bert}。
+
+Devlin等人\cite{devlin2019bert} 证明，通过掩码语言模型与下一句预测两项目标进行预训练，BERT 在十一个自然语言处理任务上刷新了当时的最优结果。
 
 \section{高效注意力机制}
 

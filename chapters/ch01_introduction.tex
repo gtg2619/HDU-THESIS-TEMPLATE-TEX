@@ -7,22 +7,28 @@
 
 \zhlipsum[1]
 
+近年来，Vaswani等人\cite{vaswani2017attention}提出的 Transformer 架构完全摒弃了循环结构，仅依赖自注意力机制实现序列建模，在机器翻译任务上取得了当时最优的结果。这一突破引发了自然语言处理领域的范式转变\cite{devlin2019bert}。
+
 \zhlipsum[2]
 
 \section{国内外研究现状}
 
 \zhlipsum[3]
-其中，Transformer 架构的提出标志着序列建模范式的根本性转变\cite{vaswani2017attention}。
+
+在此基础上，Devlin等人\cite{devlin2019bert}进一步提出了 BERT 预训练模型，通过在海量无标注语料上预训练深度双向 Transformer，再在下游任务上微调，在十一项自然语言处理基准上全面刷新了记录。多项后续工作\cite{vaswani2017attention,devlin2019bert}均沿用了这一预训练-微调范式。
 
 \zhlipsum[4]
-预训练语言模型的出现进一步推动了该领域的发展\cite{devlin2019bert}。
+
+值得注意的是，原始 Transformer 的自注意力复杂度为 $O(n^2 \cdot d)$\cite{vaswani2017attention}，这限制了其在长序列场景中的应用。
 
 \section{研究内容与创新点}
 
 \zhlipsum[6]
 
+针对上述问题，本文的主要贡献包括：
+
 \begin{enumerate}
-  \item 提出稀疏注意力与局部敏感哈希相结合的混合编码策略，在保持模型表达能力的同时显著降低自注意力的计算复杂度。
+  \item 提出稀疏注意力与局部敏感哈希相结合的混合编码策略，在保持模型表达能力的同时显著降低自注意力计算复杂度。
   \item 设计面向长序列的高效训练方案，通过梯度累积与混合精度训练减少显存占用。
   \item 在机器翻译和文本摘要等多个基准上系统验证所提方法的有效性。
 \end{enumerate}
