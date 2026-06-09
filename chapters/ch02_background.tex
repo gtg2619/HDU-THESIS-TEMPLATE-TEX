@@ -1,0 +1,58 @@
+% ============================================================
+%  第2章：相关理论与技术基础
+% ============================================================
+\chapter{相关理论与技术基础}
+
+\section{自注意力机制}
+
+\zhlipsum[1]
+
+Vaswani等人\cite{vaswani2017attention}提出注意力机制的核心计算过程，可表示为对查询（Query）、键（Key）、值（Value）三组向量的映射操作：
+\begin{equation}
+  \text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^{T}}{\sqrt{d_k}}\right) V
+  \label{eq:attention}
+\end{equation}
+其中$d_k$为键向量的维度，除以$\sqrt{d_k}$起到缩放作用。
+
+\zhlipsum[2]
+
+多头注意力机制将输入投影到$h$个不同的子空间，在每个子空间中独立计算注意力，最后拼接输出：
+\begin{align}
+  \text{MultiHead}(Q, K, V) &= \text{Concat}(\text{head}_1, \ldots, \text{head}_h) W^{O} \\
+  \text{head}_i &= \text{Attention}(QW_i^{Q}, KW_i^{K}, VW_i^{V})
+\end{align}
+
+\section{Transformer架构}
+
+\zhlipsum[14]
+Transformer 作为一种完全基于注意力机制的序列转换模型，在多个自然语言处理任务上取得了突破性成果\cite{vaswani2017attention}。
+
+每个子层均采用残差连接和层归一化：
+\begin{equation}
+  \text{LayerNorm}(x + \text{Sublayer}(x))
+  \label{eq:layernorm}
+\end{equation}
+
+前馈网络由两个线性变换和一个非线性激活函数组成：
+\begin{equation}
+  \text{FFN}(x) = \max(0, xW_1 + b_1)W_2 + b_2
+  \label{eq:ffn}
+\end{equation}
+
+\zhlipsum[5]
+
+\section{预训练与微调范式}
+
+\zhlipsum[7]
+BERT 通过掩码语言模型与下一句预测任务进行预训练，在十一个自然语言处理任务上刷新了最优结果\cite{devlin2019bert}。
+
+\section{高效注意力机制}
+
+\zhlipsum[9]
+
+\begin{equation}
+  C_{\text{full}} = O(n^2 \cdot d)
+  \label{eq:complexity_full}
+\end{equation}
+
+线性化注意力的目标是将复杂度降至$O(n \cdot d)$，代表性的方法包括稀疏注意力、低秩近似和核方法等\cite{vaswani2017attention}。

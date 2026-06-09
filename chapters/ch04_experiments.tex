@@ -1,0 +1,98 @@
+% ============================================================
+%  第4章：实验与结果分析
+% ============================================================
+\chapter{实验与结果分析}
+
+\section{实验设置}
+
+\zhlipsum[1]
+
+\input{tables/example_boxed}
+
+\safeSectionBreak
+
+\section{主要实验结果}
+
+\zhlipsum[3]
+
+\input{tables/example_threeline}
+
+\safeFloatGap
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/example_bar.pdf}
+\caption{各模型在基准测试上的性能对比}
+\label{fig:benchmark_results}
+\end{figure}
+
+\safeSectionBreak
+
+\section{消融实验}
+
+\zhlipsum[6]
+
+\begin{table}[h]
+\centering
+\caption{消融实验结果}
+\label{tab:ablation}
+{\renewcommand{\arraystretch}{0.65}
+\begin{tabular}{|l|c|c|c|}
+\hline
+模型配置 & BLEU & ROUGE-L & 推理时间 \\
+\hline
+完整模型 & 28.4 & 42.1 & 1.00$\times$ \\
+\hline
+去除稀疏注意力 & 26.1 & 39.5 & 0.82$\times$ \\
+\hline
+去除混合编码 & 27.3 & 40.8 & 0.98$\times$ \\
+\hline
+去除预训练初始化 & 25.2 & 38.3 & 1.00$\times$ \\
+\hline
+仅标准Transformer & 24.8 & 37.6 & 0.78$\times$ \\
+\hline
+\end{tabular}}
+\end{table}
+
+\safeSectionBreak
+
+\section{效率分析}
+
+\zhlipsum[8]
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.65\textwidth]{figures/example_line.pdf}
+\caption{推理时间随序列长度的变化曲线}
+\label{fig:efficiency}
+\end{figure}
+
+\safeFloatGap
+
+\section{与已有工作对比}
+
+\zhlipsum[12]
+
+\begin{table}[h]
+\centering
+\caption{与已有工作的对比}
+\label{tab:comparison}
+\small
+{\renewcommand{\arraystretch}{0.65}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+方法 & 参数量 & BLEU & 推理速度 & 年份 \\
+\hline
+\rowcolor{green!20}
+本文方法 & 65M & 28.4 & 1.00$\times$ & 2024 \\
+\hline
+Transformer-base \cite{vaswani2017attention} & 65M & 27.3 & 1.00$\times$ & 2017 \\
+\hline
+BERT-base \cite{devlin2019bert} & 110M & -- & -- & 2019 \\
+\hline
+Reformer \cite{vaswani2017attention} & 65M & 27.8 & 0.73$\times$ & 2020 \\
+\hline
+BigBird & 65M & 27.1 & 0.85$\times$ & 2020 \\
+\hline
+\end{tabular}}
+\end{table}

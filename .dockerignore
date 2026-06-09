@@ -1,0 +1,44 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.nav
+*.snm
+*.vrb
+*.run.xml
+
+# Compiled PDF (will be regenerated inside container)
+*.pdf
+# But keep template assets (hdu-logo, hdu-title, hdu-badge)
+!hdu-*.pdf
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Git
+.git/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+.dockerignore

@@ -1,0 +1,238 @@
+% ============================================================
+%  杭州电子科技大学本科毕业设计（论文）LaTeX 模板
+%  基于 hduthesis 文档类 (v1.1.1)
+%  编译: xelatex → bibtex → xelatex → xelatex
+% ============================================================
+
+% ---------- 文档类 ----------
+\documentclass
+  [
+    math-font    = STIX Two Math, agreed,
+    CJKmain-font = { {Source Han Serif CN}[AutoFakeBold = 2.5, AutoFakeSlant] },
+    CJKsans-font = { {Source Han Sans CN}[AutoFakeBold = 2] }
+  ] {hduthesis}
+
+% ---------- 宏包 ----------
+\tikzset{ > = stealth }
+\usetikzlibrary{positioning, shapes.geometric, decorations.pathreplacing}
+\usepackage{colortbl}
+\usepackage{etoolbox}
+\usepackage{caption}
+\usepackage{placeins}
+
+% ---------- 数学公式间距 ----------
+\setlength{\abovedisplayskip}{6pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{6pt plus 2pt minus 2pt}
+\setlength{\abovedisplayshortskip}{3pt plus 1pt minus 1pt}
+\setlength{\belowdisplayshortskip}{6pt plus 2pt minus 2pt}
+
+% ---------- 浮动体控制 ----------
+\newcommand{\safeFloatGap}{\par
+  \vspace{0.25\baselineskip plus 0.75\baselineskip minus 0.1\baselineskip}}
+
+\newcommand{\safeSectionBreak}{\par
+  \FloatBarrier}
+
+% ============================================================
+%  论文元信息（请根据实际情况修改）
+% ============================================================
+\hduset
+  {
+    title      = {本科毕业设计（论文）/本科毕业设计（论文）},
+    department = 学院全称,
+    major      = 专业全称,
+    class      = 班级编号,
+    stdntid    = 22222222,
+    author     = 姓名,
+    supervisor = ~:指导教师姓名,
+    bibsource  = references
+  }
+
+% ============================================================
+%  导言区补丁
+% ============================================================
+
+% ---------- 页面几何：匹配 01-论文.docx ----------
+% 页边距 上3 下2 左3 右2（左右不对称已含装订量）
+% 页眉距顶 = top - headheight - headsep ≈ 2cm
+% 页脚距底 = bottom - footskip = 1cm
+\geometry{
+  top           = 3cm,
+  bottom        = 2cm,
+  left          = 3cm,
+  right         = 2cm,
+  headheight    = 15pt,
+  headsep       = 13.5pt,
+  footskip      = 1cm,
+}
+
+% ---------- 参考文献角标：上标格式 ----------
+% gbt7714 重定义 \bibliographystyle 仅写 aux 不立即设置引用格式，
+% 导数 aux 延时生效。此处直接设置 natbib 内部标志保证首遍编译即上标。
+\makeatletter
+\AtBeginDocument{%
+  \global\NAT@supertrue
+  \global\NAT@numberstrue
+  \let\@cite\NAT@citesuper
+  \let\@citex\NAT@citexnum
+  \gdef\NAT@open{[}\gdef\NAT@close{]}%
+  \gdef\NAT@sep{,}%
+  \gdef\NAT@cmt{, }%
+  \gdef\NAT@aysep{,}\gdef\NAT@yrsep{\textsuperscript{,}}%
+}
+\makeatother
+
+% ---------- 封面：大标题展开 + 封面/承诺页边距 ----------
+% （1）\@title 为 10 字符"本科毕业设计（论文）"，替换类默认的 6 字符短标题
+% （2）封面与承诺页边界使用与正文一致的左3右2，而非类默认的 margin=3cm
+\makeatletter
+\ExplSyntaxOn
+\cs_set_protected_nopar:Nn \__hdu_maketitle_bc_auxi:
+  {
+    \begin{center}
+      \vspace*{14\p@}
+      \includegraphics[ width = .64\linewidth ]{hdu-title}
+      \par \vspace*{36\p@}
+      \scalebox{2.75}
+        {
+          \textbf
+            {
+              \__hdu_cover_spread_box:nn
+                { .255\paperwidth } { \@title }
+            }
+        }
+      \par \vspace*{1.5\baselineskip}
+      { \LARGE\bfseries （\int_use:N \l__hdu_grade_int 届） }
+      \par \vspace*{3.0\baselineskip}
+      \begin{tabular}
+        {
+          >{\large\bfseries}p{5.5\ccwd}@{}
+          >{\large\centering\arraybackslash\kaishu}p{.65\linewidth}@{}
+        }
+        \__hdu_cover_spread_box:nn { 4\ccwd } { 题目 } &
+        \__hdu_cover_center_box:nn { .95\linewidth }
+          { \@title }\\[5.2ex]
+        \__hdu_cover_spread_box:nn { 4\ccwd } { 学院 } &
+        \__hdu_cover_center_box:nn { .95\linewidth }
+          { \l__hdu_set_department_tl }\\[5.2ex]
+        \__hdu_cover_spread_box:nn { 4\ccwd } { 专业 } &
+        \__hdu_cover_center_box:nn { .95\linewidth }
+          { \l__hdu_set_major_tl }\\[5.2ex]
+        \__hdu_cover_spread_box:nn { 4\ccwd } { 班级 } &
+        \__hdu_cover_center_box:nn { .95\linewidth }
+          { \l__hdu_set_class_tl }\\[5.2ex]
+        \__hdu_cover_spread_box:nn { 4\ccwd } { 学号 } &
+        \__hdu_cover_center_box:nn { .95\linewidth }
+          { \l__hdu_set_stdntid_tl }\\[5.2ex]
+        \__hdu_cover_spread_box:nn { 4\ccwd } { 学生姓名 } &
+        \__hdu_cover_center_box:nn { .95\linewidth }
+          { \@author }\\[5.2ex]
+        \__hdu_cover_spread_box:nn { 4\ccwd } { 指导教师 } &
+        \__hdu_cover_center_box:nn { .95\linewidth }
+          { \l__hdu_set_cnsupervisor_tl }\\[5.2ex]
+        \__hdu_cover_spread_box:nn { 4\ccwd } { 完成日期 } &
+        \__hdu_cover_center_box:nn { .95\linewidth }
+          {
+            \textsf{\int_use:N \c_sys_year_int} 年
+            \textsf{\int_use:N \c_sys_month_int} 月
+          }
+      \end{tabular}
+    \end{center}
+  }
+\RenewDocumentCommand \maketitle {}
+  {
+    \newgeometry { left = 3cm, right = 2cm, top = 3cm, bottom = 2cm,
+                   headheight = 15pt, headsep = 13.5pt, footskip = 1cm }
+    \titlepage \__hdu_maketitle_bc_auxi: \endtitlepage
+    \restoregeometry
+  }
+\RenewDocumentCommand \commitment { O{} }
+  {
+    \newgeometry { left = 3cm, right = 2cm, top = 3cm, bottom = 2cm,
+                   headheight = 15pt, headsep = 13.5pt, footskip = 1cm }
+    \titlepage
+      \__hdu_commitment_bc_aux:n {#1}
+    \endtitlepage
+    \restoregeometry
+  }
+\ExplSyntaxOff
+\makeatother
+
+% ============================================================
+%  正文
+% ============================================================
+\begin{document}
+
+% ---------- 页眉宽度 ----------
+\setlength{\headwidth}{\textwidth}
+
+% ---------- 封面 & 诚信承诺 ----------
+\maketitle
+\commitment
+
+% ---------- 中文摘要 ----------
+\begin{abstract}[cn]
+基于自注意力机制的Transformer架构凭借全局建模能力和高效并行特性，已成为序列建模的主流范式。本文系统研究了自注意力机制的理论基础与工程实现。在方法层面，提出了稀疏注意力与局部敏感哈希相结合的混合策略；在实验层面，在机器翻译和文本摘要等任务上验证了方法的有效性。实验表明，所提出的方法在BLEU分数上提高2.3个点，同时推理时间减少31\%。本研究为自注意力机制的进一步优化提供了有价值的参考。
+
+\keywords{自注意力机制, Transformer, 序列建模, 深度学习, 自然语言处理}
+\end{abstract}
+
+% ---------- 英文摘要 ----------
+\begin{abstract}[en]
+The Transformer architecture based on self-attention mechanisms has become the mainstream paradigm for sequence modeling due to its global modeling capability and efficient parallelism. This paper systematically studies the theoretical foundations and engineering implementations of self-attention mechanisms. We propose a hybrid strategy combining sparse attention with locality-sensitive hashing, and validate its effectiveness on machine translation and text summarization tasks. Experiments show that the proposed method achieves a 2.3 BLEU score improvement while reducing inference time by 31\%.
+
+\keywords{self-attention, Transformer, sequence modeling, deep learning, natural language processing}
+\end{abstract}
+
+% ============================================================
+%  目录（仅目录使用罗马数字页码，自动编号）
+% ============================================================
+% 类 hook 会在 \tableofcontents 前后清空 \cfoot；
+% 此处手动渲染目录，绕过 hook 保证罗马数字页码显示。
+\makeatletter
+\let\savedps@plain\ps@plain
+\def\ps@plain{%
+  \let\@mkboth\@gobbletwo
+  \def\@oddfoot{\hfil\small\thepage\hfil}%
+  \let\@evenfoot\@oddfoot
+  \let\@oddhead\@empty\let\@evenhead\@empty}
+\makeatother
+\clearpage
+\pagenumbering{Roman}
+\cfoot{\small\thepage}
+\fancyfoot[L]{}
+\fancyfoot[R]{}
+% 手动渲染目录标题（\centerline 确保居中）
+\vspace*{\cftbeforetoctitleskip}%
+{\cfttoctitlefont\centerline{\contentsname}}%
+\nobreak
+\vspace{\cftaftertoctitleskip}%
+\makeatletter
+\@starttoc{toc}
+\makeatother
+\clearpage
+\makeatletter
+\let\ps@plain\savedps@plain
+\makeatother
+\clearpage
+\pagenumbering{arabic}
+\cfoot{\small\thepage}
+
+% ============================================================
+%  正文各章节
+% ============================================================
+\input{chapters/ch01_introduction}
+\input{chapters/ch02_background}
+\input{chapters/ch03_design}
+\input{chapters/ch04_experiments}
+
+% ---------- 致谢 ----------
+\chapter*{致\qquad 谢}
+\addcontentsline{toc}{chapter}{致谢}
+
+感谢指导教师……感谢家人和朋友……感谢所有提供帮助的人……
+
+% ---------- 参考文献 ----------
+\printbibliography
+
+\end{document}
