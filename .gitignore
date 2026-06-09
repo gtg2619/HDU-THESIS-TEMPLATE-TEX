@@ -1,5 +1,4 @@
 # LaTeX 编译产物
-main.pdf
 *.aux
 *.bbl
 *.blg
